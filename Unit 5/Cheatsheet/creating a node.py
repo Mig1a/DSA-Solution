@@ -17,3 +17,4 @@ while current:
     print(current.value)
     current = current.next
 
+
