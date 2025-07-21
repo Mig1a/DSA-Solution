@@ -57,11 +57,61 @@ def has_cycle(head):
     while fast and fast.next:
         slow = slow.next  # Move slow pointer by one
         fast = fast.next.next  # Move fast pointer by two
-        
+
         if slow == fast:  # If they meet, there's a cycle
             return True
 
     return False
+
+#Problem 5: Remove Nth Node From End of List
+def remove_nth_from_end(head, n):
+    temp = Node('temp')
+    temp.next = head
+
+    pre = temp
+    current = head
+    count = 0
+
+
+
+    while current and count < n:
+        pre = current
+        current = current.next
+        count += 1
+
+    if count == n:
+        if current:
+            pre.next = current.next
+        else:
+            pre.next = None
+
+    return temp.next
+
+def reverse_first_k(head, k):
+    if not head or k <= 0:
+        return head
+
+    prev = None
+    # Reset counters
+    current = head
+    count = 0
+
+    # Reverse first k nodes
+    while count < k and current:
+        next_node = current.next
+        current.next = prev
+        prev = current
+        current = next_node
+        count += 1
+
+    # Connect the end of reversed list to the rest
+    head.next = current
+
+    # Return new head (prev is now the head of reversed part)
+    return prev
+
+
+
 
 head1 = Node(5, Node(6, Node(7, Node(8))))
 
@@ -89,3 +139,16 @@ peach = Node("Peach", Node("Luigi", Node("Mario", Node("Toad"))))
 peach.next.next.next = peach.next
 
 print(has_cycle(peach))
+
+head1 = Node("apple", Node("cherry", Node("orange", Node("peach", Node("pear")))))
+head2 = Node("Rainbow Trout", Node("Ray"))
+head3 = Node("Rainbow Stag")
+
+
+print(print_linked_list(remove_nth_from_end(head1, 0)))
+print(print_linked_list(remove_nth_from_end(head2, 1)))
+print(print_linked_list(remove_nth_from_end(head3, 0)))
+
+head = Node("apple", Node("cherry", Node("orange", Node("peach", Node("pear")))))
+
+print_linked_list(reverse_first_k(head, 3))
